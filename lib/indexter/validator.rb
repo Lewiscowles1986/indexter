@@ -70,7 +70,7 @@ module Indexter
       # These are the columns we have indexes on that also end in COL_SUFFIX
       def indexes(table)
         ActiveRecord::Base.connection.indexes(table).map do |idx_def|
-          idx_def.columns.select { |col| col.end_with? *@suffixes }
+          idx_def.columns.select { |col| col.end_with? *@suffixes } if idx_def.columns.respond_to?(:select)
         end.flatten
       end
 
